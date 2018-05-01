@@ -17,8 +17,8 @@ with open('./test.txt') as f:
       fdlist.insert(FunctionalDependency(lhs,rhs))
 
 print("-"*10 + ' File Read ' + "-"*10)
-print('R: ' + R.toString())
-print(fdlist.toString())
+print('R = ' + R.toString())
+print('FD = ' + fdlist.toString())
 print("-"*(20+len(' File Read ')))
 
 # compute complete list of functional dependencies
