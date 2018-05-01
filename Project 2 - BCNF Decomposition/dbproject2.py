@@ -2,7 +2,25 @@ from itertools import chain, combinations
 from numpy import array
 
 class Relation:
-  """The Relation class returns an object representing a relation between a set of attributes."""
+
+  """
+  The Relation class returns an object representing a relation between a set of attributes.
+  
+  To initialize a relation object, provide a list A. A can either be:
+
+  (1) a vector of attributes labels from A-Z (e.g. ['A','B','C']) or 
+  (2) a binary vector with value 1 at the ASCII code index of each attribute (e.g. A[65] = 1 indicates attribute with label 'A')
+
+  Example Usage:
+
+  A = ['A','B',C]
+  R = Relation(A)
+
+  A = [0]*127 
+  A[65:86] = [1,1,1,] # equivalent to ['A','B','C']
+  R = Relation(A)
+
+  """
 
   _ASCII_TABLE = [chr(i) for i in range(127)]
 
@@ -19,7 +37,9 @@ class Relation:
       self.A = A
 
   def toString(self):
+
     """Returns a string representation of the Relation instance."""
+
     bool_index = array(self.A).astype(bool)
     relation_string = array(self._ASCII_TABLE)[bool_index]
     return ''.join(relation_string)
@@ -76,7 +96,7 @@ class Relation:
       return None
     
   def union(self,r):
-    """Returns the union of the Relation instance and the Relation argument 'r'."""
+    """Returns a new Relation objct which is the union of the Relation instance and the Relation argument 'r'."""
     if not isinstance(r,Relation):
       raise TypeError('Inappropriate argument type')
     r1 = set(self.toString())
@@ -85,7 +105,7 @@ class Relation:
     return Relation(list(union))
 
   def intersect(self,r):
-    """Returns the intersection of the Relation instance and the Relation argument 'r'."""
+    """Returns a new Relation object which is the intersection of the Relation instance and the Relation argument 'r'."""
     if not isinstance(r,Relation):
       raise TypeError('Inappropriate argument type')
     r1 = set(self.toString())
@@ -114,11 +134,11 @@ class FunctionalDependency:
     pass 
 
   def getLHS(self):
-    """Returns the Relation instance on the left hand side of the functional dependency."""
+    """Returns the Relation object on the left hand side of the functional dependency."""
     return self.lhs
 
   def getRHS(self):
-    """Returns the Relation instance on the right hand side of the functional dependency."""
+    """Returns the Relation object on the right hand side of the functional dependency."""
     return self.rhs
 
 
@@ -131,7 +151,7 @@ class FunctionalDependencyList(list):
     return fdlist_string
 
   def insert(self,f):
-    """Inserts a FunctionalDependency into the FunctionalDependencyList."""
+    """Inserts a FunctionalDependency object into the FunctionalDependencyList."""
     if not isinstance(f,FunctionalDependency):
       raise TypeError('Inappropriate argument type')
     self.append(f)
@@ -151,7 +171,7 @@ class FunctionalDependencyList(list):
       return None
 
   def closure(self,r):
-    """Returns a nre Relation object which is the closure for the set of Functional Dependencies."""
+    """Returns a new Relation object which is the closure for the set of Functional Dependencies."""
     if not isinstance(r,Relation):
       raise TypeError('Inappropriate argument type')
     closure = r
