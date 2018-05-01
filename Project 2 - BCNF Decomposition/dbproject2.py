@@ -2,7 +2,7 @@ from itertools import chain, combinations
 from numpy import array
 
 class Relation:
-  """The Relation class gives an object representing a relation between a set of attributes."""
+  """The Relation class returns an object representing a relation between a set of attributes."""
 
   _ASCII_TABLE = [chr(i) for i in range(127)]
 
@@ -95,7 +95,7 @@ class Relation:
 
 
 class FunctionalDependency:
-  """The FunctionalDependency class gives an object that represents a functional dependency of two relations."""
+  """The FunctionalDependency class returns an object that represents a functional dependency of two relations."""
   
   def __init__(self,r1,r2):
     if not isinstance(r1,Relation) or not isinstance(r2,Relation):
@@ -151,19 +151,23 @@ class FunctionalDependencyList(list):
       return None
 
   def closure(self,r):
+    """Returns a nre Relation object which is the closure for the set of Functional Dependencies."""
     if not isinstance(r,Relation):
       raise TypeError('Inappropriate argument type')
-    closure = set(r.toString())
-    # closure = r.toString()
-    for fd in self:      
-      lhs = set(fd.getLHS().toString())
-      if lhs.intersection(closure):
-      # if lhs in closure:
-        rhs = set(fd.getRHS().toString())
-        for attr in rhs:
-          closure.add(attr)
-          # closure+=attr
-    return Relation(sorted(list(closure)))
+    closure = r
+    previous = closure
+    diff = True
+    while diff:
+      for fd in self:
+        lhs = fd.getLHS()
+        if lhs.isSubset(r):
+          previous = closure
+          rhs = fd.getRHS()
+          closure = closure.union(rhs)
+      if not (set(previous.toString())-set(closure.toString())):
+        diff = False
+    return closure
+
 
 class RelationList(list):
   """A list of Relation objects."""
