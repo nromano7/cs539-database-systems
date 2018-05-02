@@ -1,4 +1,4 @@
-from dbproject2 import FunctionalDependency, FunctionalDependencyList, Relation, RelationList
+from dbtools import FunctionalDependency, FunctionalDependencyList, Relation, RelationList
 
 # Test different inputs
 A = [0]*127

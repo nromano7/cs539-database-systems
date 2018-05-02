@@ -1,7 +1,7 @@
-from dbproject2 import FunctionalDependency, FunctionalDependencyList, Relation, RelationList
+from dbtools import FunctionalDependency, FunctionalDependencyList, Relation, RelationList
 
 # Read the input file
-with open('./test2.txt') as f:
+with open('./test3.txt') as f:
   fdlist = FunctionalDependencyList()
   is_first_line = True
   for line in f:
@@ -36,13 +36,36 @@ print("-"*(20+len(' Closure of FD ')))
 
 # compute superkeys
 print("-"*10 + ' Superkeys ' + "-"*10)
-super_keys = FunctionalDependencyList()
-my_fd = completeF.getFirst()
+superkeys = FunctionalDependencyList()
+compF = FunctionalDependencyList()
+[compF.insert(f) for f in completeF]
+my_fd = compF.getFirst()
 while my_fd is not None:
   lhs = my_fd.getLHS().union(my_fd.getRHS())
   if R.isSubset(lhs):
-    super_keys.insert(my_fd)
+    superkeys.insert(my_fd)
     print(f"superkey: {my_fd.toString()}")
-  my_fd = completeF.getNext()
+  my_fd = compF.getNext()
 print("-"*(20+len(' Superkeys ')))
+
+# compute keys
+print("-"*10 + ' Keys ' + "-"*10)
+keys = RelationList()
+my_fd = superkeys.getFirst()
+previous = len(R.toString())
+while my_fd is not None:
+  lhs = my_fd.getLHS()
+  if len(lhs.toString()) <= previous:
+    keys.insert(lhs)
+    print(f'key: {lhs.toString()}')
+    previous = len(lhs.toString())
+  my_fd = superkeys.getNext()
+print("-"*(20+len(' Keys ')))
+
+# find all bcnf violations
+fd = completeF.getFirst()
+while fd is not None:
+  if fd.BCNFviolation(R):
+    print(f"BCNF Violation: {f.toString()}")
+  f = completeF.getNext()
 
