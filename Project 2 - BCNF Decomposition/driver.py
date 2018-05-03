@@ -1,7 +1,7 @@
 from dbtools import FunctionalDependency, FunctionalDependencyList, Relation, RelationList
 
 # Read the input file
-with open('./test3.txt') as f:
+with open('./test.txt') as f:
   fdlist = FunctionalDependencyList()
   is_first_line = True
   for line in f:
@@ -26,8 +26,10 @@ completeF = FunctionalDependencyList()
 new_rel = R.powerSetFirst()
 while new_rel is not None:
   closure = fdlist.closure(new_rel)
+  # print(f'{closure.toString()}')
   if not new_rel.equals(closure):
     completeF.insert(FunctionalDependency(new_rel,closure))
+    # print(f'{completeF.toString()}')
   new_rel = R.powerSetNext()
 
 print("-"*10 + ' Closure of FD ' + "-"*10)
@@ -63,9 +65,9 @@ while my_fd is not None:
 print("-"*(20+len(' Keys ')))
 
 # find all bcnf violations
-fd = completeF.getFirst()
-while fd is not None:
-  if fd.BCNFviolation(R):
-    print(f"BCNF Violation: {f.toString()}")
-  f = completeF.getNext()
+# fd = completeF.getFirst()
+# while fd is not None:
+#   if fd.BCNFviolation(R):
+#     print(f"BCNF Violation: {f.toString()}")
+#   f = completeF.getNext()
 

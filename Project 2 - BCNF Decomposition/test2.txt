@@ -1,5 +1,3 @@
-A B C D E
+A B C
 A B -> C
-B -> D
-C -> E
-D -> A
+C -> A

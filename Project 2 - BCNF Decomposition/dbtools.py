@@ -266,20 +266,34 @@ class FunctionalDependencyList(list):
 
     if not isinstance(r,Relation):
       raise TypeError('Inappropriate argument type')
+
     closure = r
-    # previous = closure
+    # print(f'closure: {closure.toString()}')
+    # for fd in self:
+    #   lhs = fd.getLHS()
+    #   print(f'lhs: {lhs.toString()}')
+    #   if lhs.isSubset(closure):
+    #     rhs = fd.getRHS()
+    #     print(f'rhs: {rhs.toString()}')
+    #     print(f'old_closure: {closure.toString()}')
+    #     closure = closure.union(rhs) - r
+    #     print(f'new_closure: {closure.toString()}')
+
     diff = True
     while diff:
+      previous = closure
+      # print(f'previous: {previous.toString()}')
       for fd in self:
         lhs = fd.getLHS()
-        if lhs.isSubset(r):
+        # print(f'lhs: {lhs.toString()}')
+        if lhs.isSubset(closure):
           previous = closure
           rhs = fd.getRHS()
           closure = closure.union(rhs) #- r
-          diff = previous.equals(closure)
-      else:
+          # print(f'closure: {closure.toString()}')
+      if closure.equals(previous):
         diff = False
-    return closure
+    return closure - r
 
 
 class RelationList(list):
