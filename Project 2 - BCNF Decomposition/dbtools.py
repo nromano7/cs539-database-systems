@@ -122,9 +122,12 @@ class Relation:
     """
     Returns a new Relation objct which is the union of the Relation instance and the Relation argument 'r'.
     """
+    if r is None:
+      return self
 
     if not isinstance(r,Relation):
       raise TypeError('Inappropriate argument type')
+
     r1 = set(self.toString())
     r2 = set(r.toString())
     union = ''.join(sorted(r1.union(r2)))
@@ -141,6 +144,8 @@ class Relation:
     r1 = set(self.toString())
     r2 = set(r.toString())
     intersection = ''.join(sorted(r1.intersection(r2)))
+    if intersection == '':
+      return None
     return Relation(list(intersection))
 
   def __sub__(self,r):
@@ -190,9 +195,28 @@ class FunctionalDependency:
     return fd_string
 
   def BCNFviolation(self,r):
+
+    """ 
+    Returns True if Functional Dependency is a BCNF violation for given Relation, False otherwise.
+    """
+
     if not isinstance(r,Relation):
       raise TypeError('Inappropriate argument type')
-    pass 
+
+    # print(f'S = {r.toString()}')
+    # print(f'XY = {self.getLHS().union(self.getRHS()).toString()}')
+    
+    if not r.isSubset(self.getLHS().union(self.getRHS())):
+      return True
+
+    # if not self.getLHS().isSubset(r):
+    #   return True
+
+    # if self.getRHS().intersect(r) is None:
+    #   return True
+
+    return False
+    
 
   def getLHS(self):
 
@@ -268,17 +292,6 @@ class FunctionalDependencyList(list):
       raise TypeError('Inappropriate argument type')
 
     closure = r
-    # print(f'closure: {closure.toString()}')
-    # for fd in self:
-    #   lhs = fd.getLHS()
-    #   print(f'lhs: {lhs.toString()}')
-    #   if lhs.isSubset(closure):
-    #     rhs = fd.getRHS()
-    #     print(f'rhs: {rhs.toString()}')
-    #     print(f'old_closure: {closure.toString()}')
-    #     closure = closure.union(rhs) - r
-    #     print(f'new_closure: {closure.toString()}')
-
     diff = True
     while diff:
       previous = closure

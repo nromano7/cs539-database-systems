@@ -33,7 +33,7 @@ while new_rel is not None:
   new_rel = R.powerSetNext()
 
 print("-"*10 + ' Closure of FD ' + "-"*10)
-print(completeF.toString())
+[print(f.toString()) for f in completeF]
 print("-"*(20+len(' Closure of FD ')))
 
 # compute superkeys
@@ -65,9 +65,57 @@ while my_fd is not None:
 print("-"*(20+len(' Keys ')))
 
 # find all bcnf violations
-# fd = completeF.getFirst()
-# while fd is not None:
-#   if fd.BCNFviolation(R):
-#     print(f"BCNF Violation: {f.toString()}")
-#   f = completeF.getNext()
+print("-"*10 + ' BCNF Violations ' + "-"*10)
+compF = FunctionalDependencyList()
+[compF.insert(f) for f in completeF]
+violations = FunctionalDependencyList()
+fd = compF.getFirst()
+while fd is not None:
+  if fd.BCNFviolation(R):
+    violations.insert(fd)
+    print(f"BCNF Violation: {fd.toString()}")
+  fd = compF.getNext()
+if len(violations) == 0:
+  print(None)
+print("-"*(20+len(' BCNF Violations ')))
 
+# BCNF decomposition
+db = RelationList()
+s = []
+s.append(R)
+isEmpty = False
+while len(s) > 0:
+  a = s.pop()
+  violation = False
+  f = fdlist.getFirst()
+  while ((not violation) and (f is not None)):
+    if f.BCNFviolation(a):
+      violation = True
+    else:
+      f = fdlist.getNext()			
+  if (not violation):
+    print(a.toString())
+    print(f'--- inserted --- ({a.toString()})')
+    db.insert(a)
+  elif (f is not None):
+    # X = f.getLHS()
+    # Y = completeF.closure(X) - X
+    # XY = X.union(Y)
+    # Z = a - XY
+    # XZ = X.union(Z)
+    # s.append(XY)
+    # s.append(XZ)
+    x = f.getLHS()
+    y = f.getRHS().intersect(a)
+    xy = x.union(y)
+    s.append(xy)
+    s.append(a - f.getRHS())
+    print("--------------------------")
+    print(f'R = {a.toString()}')
+    print(f'{x.toString()} -> {y.toString() if (y is not None) else None}')
+    print([i.toString() for i in s])
+    print("--------------------------")
+
+print("------------- Tables in BCNF ----------------")
+print(db.toString())
+print("---------------------------------------------")
