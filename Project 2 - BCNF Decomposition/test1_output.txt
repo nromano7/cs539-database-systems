@@ -1,0 +1,87 @@
+---------- File Read ----------
+R = ABCDE
+FD = ['AB-->C', 'C-->D', 'D-->BE']
+-------------------------------
+---------- Closure of FD ----------
+C-->BDE
+D-->BE
+AB-->CDE
+AC-->BDE
+AD-->BCE
+BC-->DE
+BD-->E
+CD-->BE
+CE-->BD
+DE-->B
+ABC-->DE
+ABD-->CE
+ABE-->CD
+ACD-->BE
+ACE-->BD
+ADE-->BC
+BCD-->E
+BCE-->D
+CDE-->B
+ABCD-->E
+ABCE-->D
+ABDE-->C
+ACDE-->B
+-----------------------------------
+---------- Superkeys ----------
+superkey: AB-->CDE
+superkey: AC-->BDE
+superkey: AD-->BCE
+superkey: ABC-->DE
+superkey: ABD-->CE
+superkey: ABE-->CD
+superkey: ACD-->BE
+superkey: ACE-->BD
+superkey: ADE-->BC
+superkey: ABCD-->E
+superkey: ABCE-->D
+superkey: ABDE-->C
+superkey: ACDE-->B
+-------------------------------
+---------- Keys ----------
+key: AB
+key: AC
+key: AD
+--------------------------
+---------- BCNF Violations ----------
+BCNF Violation: C-->BDE
+BCNF Violation: D-->BE
+BCNF Violation: BC-->DE
+BCNF Violation: BD-->E
+BCNF Violation: CD-->BE
+BCNF Violation: CE-->BD
+BCNF Violation: DE-->B
+BCNF Violation: BCD-->E
+BCNF Violation: BCE-->D
+BCNF Violation: CDE-->B
+-------------------------------------
+--------------------------
+R = ABCDE
+AB -> C
+['ABC', 'ABDE']
+--------------------------
+--------------------------
+R = ABDE
+C -> D
+['ABC', 'CD', 'ABE']
+--------------------------
+--------------------------
+R = ABE
+D -> BE
+['ABC', 'CD', 'BDE', 'A']
+--------------------------
+A
+--- inserted --- (A)
+BDE
+--- inserted --- (BDE)
+CD
+--- inserted --- (CD)
+ABC
+--- inserted --- (ABC)
+------------- Tables in BCNF ----------------
+['A', 'ABC', 'BDE', 'CD']
+---------------------------------------------

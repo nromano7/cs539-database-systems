@@ -1,7 +1,7 @@
 from dbtools import FunctionalDependency, FunctionalDependencyList, Relation, RelationList
 
 # Read the input file
-with open('./test.txt') as f:
+with open('./test2.txt') as f:
   fdlist = FunctionalDependencyList()
   is_first_line = True
   for line in f:

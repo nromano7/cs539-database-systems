@@ -1,0 +1,60 @@
+---------- File Read ----------
+R = ABCDE
+FD = ['A-->B', 'C-->D']
+-------------------------------
+---------- Closure of FD ----------
+A-->B
+C-->D
+AC-->BD
+AD-->B
+AE-->B
+BC-->D
+CE-->D
+ABC-->D
+ACD-->B
+ACE-->BD
+ADE-->B
+BCE-->D
+ABCE-->D
+ACDE-->B
+-----------------------------------
+---------- Superkeys ----------
+superkey: ACE-->BD
+superkey: ABCE-->D
+superkey: ACDE-->B
+-------------------------------
+---------- Keys ----------
+key: ACE
+--------------------------
+---------- BCNF Violations ----------
+BCNF Violation: A-->B
+BCNF Violation: C-->D
+BCNF Violation: AC-->BD
+BCNF Violation: AD-->B
+BCNF Violation: AE-->B
+BCNF Violation: BC-->D
+BCNF Violation: CE-->D
+BCNF Violation: ABC-->D
+BCNF Violation: ACD-->B
+BCNF Violation: ADE-->B
+BCNF Violation: BCE-->D
+-------------------------------------
+--------------------------
+R = ABCDE
+A -> B
+['AB', 'ACDE']
+--------------------------
+--------------------------
+R = ACDE
+C -> D
+['AB', 'CD', 'ACE']
+--------------------------
+ACE
+--- inserted --- (ACE)
+CD
+--- inserted --- (CD)
+AB
+--- inserted --- (AB)
+------------- Tables in BCNF ----------------
+['AB', 'ACE', 'CD']
+---------------------------------------------
