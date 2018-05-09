@@ -9,6 +9,8 @@ customers to use the web to browse/search the contents of your database and to m
 
 Built using: [Django](https://docs.djangoproject.com/en/2.0/), [MySQL](https://www.mysql.com/), [Bootstrap](http://getbootstrap.com/)
 
+![screenshot](https://github.com/nromano7/database-systems/blob/master/Project%201%20-%20Online%20Flight%20Reservation%20System/screenshots/landing_page.PNG)
+
 #### [BCNF Decomposition](https://github.com/nromano7/database-systems/tree/master/Project%202%20-%20BCNF%20Decomposition)  
 
 Write a program, using an object oriented programming language, that takes as input a file with a relation (set of attributes R) and a set of functional dependencies and satisfies the following use cases:
