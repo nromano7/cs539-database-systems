@@ -202,18 +202,9 @@ class FunctionalDependency:
 
     if not isinstance(r,Relation):
       raise TypeError('Inappropriate argument type')
-
-    # print(f'S = {r.toString()}')
-    # print(f'XY = {self.getLHS().union(self.getRHS()).toString()}')
     
     if not r.isSubset(self.getLHS().union(self.getRHS())):
       return True
-
-    # if not self.getLHS().isSubset(r):
-    #   return True
-
-    # if self.getRHS().intersect(r) is None:
-    #   return True
 
     return False
     
@@ -295,15 +286,12 @@ class FunctionalDependencyList(list):
     diff = True
     while diff:
       previous = closure
-      # print(f'previous: {previous.toString()}')
       for fd in self:
         lhs = fd.getLHS()
-        # print(f'lhs: {lhs.toString()}')
         if lhs.isSubset(closure):
           previous = closure
           rhs = fd.getRHS()
           closure = closure.union(rhs) #- r
-          # print(f'closure: {closure.toString()}')
       if closure.equals(previous):
         diff = False
     return closure - r
